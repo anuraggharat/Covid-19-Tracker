@@ -4,8 +4,8 @@ import { View,StyleSheet,Text, ShadowPropTypesIOS } from 'react-native'
 const Card = (props) => {
     return (
         <View style={{...styles.card,...props.style}} >
-                <Text style={styles.count}>{props.no}</Text>
-                <Text style={styles.name}>Died</Text>
+                <Text style={{...styles.count,...props.style}}>{props.no}</Text>
+    <Text style={styles.name}>{props.name}</Text>
         </View>
     )
 }
@@ -18,8 +18,7 @@ const styles = StyleSheet.create({
         textAlign:"center",
         justifyContent:"center",
         alignItems:"center",
-        
-        color:"white"
+        backgroundColor:"white"
         },
     count:{
         fontSize:40,
@@ -27,7 +26,7 @@ const styles = StyleSheet.create({
     },
     name:{
         fontSize:20,
-        color:"white"
+        color:"grey"
     }
     
   });

@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react';
-import { StyleSheet, Text, View, Button, TextInput,Modal } from 'react-native';
-import {LineChart,} from "react-native-chart-kit";
+import { StyleSheet, Text, View, Button, TextInput,Modal, ScrollView } from 'react-native';
+import {LineChart,ProgressChart} from "react-native-chart-kit";
 import Card from './Components/Card'
 import { Dimensions } from "react-native";
 import Colors from './Constants/Colors'
@@ -9,11 +9,11 @@ export default function App() {
   const [modal,setModal] = useState(false)
   const [deaths,setDeaths] = useState([])
   const [recovered,setRecovered] =useState([])
+  const [date,setDate]=useState([])
   const [total,setTotal]= useState([])
-  var recovery,dead,count=0
 
   let countryCount = []
- 
+
   
   //async function to fetch data
   async function fetchData(){
@@ -23,32 +23,20 @@ export default function App() {
     setTotal(countryCount.map(item=>item.confirmed))
     setRecovered(countryCount.map(item=>item.recovered))
     setDeaths(countryCount.map(item=>item.deaths))
-    var tempTotal=total
-    var tempDeath=deaths
-    var tempRecovered=recovered
-    recovery=tempRecovered.pop()
-    dead=tempDeath.pop()
-    count=tempTotal.pop()   
-    // console.log("total", total)
+    setDate(countryCount.map(item=>item.date))
+   
+    
+    
     // console.log("deaths", deaths)
     // console.log("recovered", recovered)
   }
-  const update=()=>{
-
-  }
-
-
-  
-
   useEffect(()=>{
     fetchData()
   },[])
-  
-  const screenWidth = Dimensions.get("window").width;
-  
-  const showStatsForCountry=()=>{
-    setModal(!modal)
-  }
+  const data = {
+    labels: ["Swim", "Bike", "Run"], // optional
+    data: [0.4, 0.6, 0.8]
+  };
   const chartConfig = {
     backgroundGradientFrom: "#1E2923",
     backgroundGradientFromOpacity: 0,
@@ -58,18 +46,14 @@ export default function App() {
     strokeWidth: 2, // optional, default 3
     barPercentage: 0.5
   };
-  
-  const data = {
-    labels: ["January", "February", "March", "April", "May", "June"],
-    datasets: [
-      {
-        data: [20, 45, 28, 80, 99, 43],
-       
-        strokeWidth: 2 // optional
-      }
-    ],
-    legend: ["Rainy Days", "Sunny Days", "Snowy Days"] // optional
-  };
+  let dead=deaths.slice(-1)[0]
+  let count=total.slice(-1)[0]
+  let recovery=recovered.slice(-1)[0]
+  let latest=date.pop()
+  console.log("total", count)
+  const showStatsForCountry=()=>{
+    setModal(!modal)
+  }
   return (
     
     <View style={styles.container}>
@@ -81,57 +65,81 @@ export default function App() {
 
       <View style={styles.chartHolder}>
         {/* This view will hold the graph */}
+        <ScrollView>
+        <View style={styles.chart}>
+          
 
-                    <LineChart
-                    style={styles.chart}
-                    data={{
-                    labels: ["January", "February", "March", "April"],
-                    datasets: [
-                    {
-                      data: recovered
-                    }
-                  ]
-                }}
-                width={Dimensions.get("window").width*.95} // from react-native
-                height={300}
-                yAxisLabel="$"
-                yAxisSuffix="k"
-                yAxisInterval={1} 
-                chartConfig={{
-                  backgroundColor: "#6750df",
-                  backgroundGradientFrom: "#6750df",
-                  backgroundGradientTo: "#ddd7ff",
-                  decimalPlaces: 2, 
-                  color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                  labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                  style: {
-                    borderRadius: 16
-                  },
-                  propsForDots: {
-                    r: "6",
-                    strokeWidth: "2",
-                    stroke: "#ffa726"
-                  }
-                }}
-                bezier
-                style={{
-                  marginVertical: 8,
-                  borderRadius: 16
-                }}
-                bezier
-              />
-
+          
+  <View style={styles.countstatus}><Text style={styles.subheading}>Death Toll{latest}</Text></View>
+  <LineChart
+    data={{
+      labels: ["January", "February", "March", "April"],
+      datasets: [
+        {
+          data: total
+        }
+      ]
+    }}
+    width={Dimensions.get("window").width*.95} // from react-native
+    height={320}
+    chartConfig={{
+      backgroundColor: "#FFF",
+      backgroundGradientFrom: "#FFF",
+      backgroundGradientTo: "#fff",
+      decimalPlaces: 0,
+      color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+      labelColor: (opacity = 0) => `rgba(0, 0, 0, ${opacity})`,
+      style: {
+        borderRadius: 16
+      },
+      propsForDots: {
+        r: "2",
+        strokeWidth: "2",
+        stroke: "#ffa726"
+      }
+    }}
+   
+    style={{
+      marginVertical: 8,
+      borderRadius: 16,
+      padding:5
+    }}
+  />
+</View>
+<View style={styles.chart}>
+<ProgressChart
+  data={data}
+  width={Dimensions.get("window").width*.95} // from react-native
+  height={220}
+  strokeWidth={16}
+  radius={32}
+  chartConfig={chartConfig}
+  hideLegend={false}
+/>
+</View>
+</ScrollView>
                 <Text style={styles.country} >Country: INDIA</Text>
 
           </View>
       
               <View style={styles.stats}>
                 <View style={styles.cardHolder}>
-                  <Card style={{backgroundColor:"#74B9FF"}} no={count} ></Card>
-                  <Card style={{backgroundColor:"#E71C23"}} no={dead}></Card>
-                  <Card style={{backgroundColor:"#2ecc72"}} no={recovery} ></Card>
+                  <Card 
+                  style={{color:"#74B9FF"}} 
+                  no={count} 
+                  name="Total"
+                  ></Card>
+                  <Card 
+                  style={{color:"#E71C23"}} 
+                  no={dead}
+                  name="Deaths"
+                  ></Card>
+                  <Card 
+                  style={{color:"#2ecc72"}} 
+                  no={recovery} 
+                  name="Recovered"></Card>
                 </View>
-                <View style={styles.countDate}><Text>*Count as per the date 24 April</Text></View>
+                <View style={styles.countDate}><Text>Count as per the date 24 April</Text></View>
                 <View style={styles.buttonHolder}><Button color="green" onPress={showStatsForCountry} style={styles.btn} title="Change Country" ></Button></View>
               </View>
       
@@ -154,12 +162,25 @@ const styles = StyleSheet.create({
   heading:{
     fontSize:30
   },
+  chart:{
+    width:"100%",
+
+    justifyContent:"center",
+    textAlign:"center",
+    alignItems:"center",
+    alignContent:"center"
+  },
   header:{
     width:'100%',
-    height:"15%",
-    paddingTop:50,
-    paddingLeft:20
+    height:"10%",
+    paddingTop:40,
+    paddingLeft:20,
+    borderBottomColor:"grey",
+    borderBottomWidth:2
     
+  },
+  subheading:{
+    fontSize:30
   },
   country:{
     fontSize:30,
@@ -170,13 +191,11 @@ const styles = StyleSheet.create({
     paddingTop:20,
     borderRadius:50
   },
-  btn:{
-    borderRadius:20,
-    color:"red",
-    shadowColor:"red",
-    shadowOffset:{height:20,width:20},
-    shadowOpacity:1,
-    elevation:5
+  countstatus:{
+    display:"flex",
+    justifyContent:"center",
+    paddingLeft:30,
+    fontSize:30
   },
   countDate:{
     textAlign:"center",
@@ -185,7 +204,7 @@ const styles = StyleSheet.create({
     justifyContent:"center"
   },
   chartHolder:{
-    height:"50%",
+    height:"55%",
     alignItems:"center",
     justifyContent:'center',
     alignContent:'center'
