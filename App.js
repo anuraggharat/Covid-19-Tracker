@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import { StyleSheet, Text, View, Button, TextInput,Modal, ScrollView } from 'react-native';
-import {LineChart,ProgressChart} from "react-native-chart-kit";
+import {LineChart,ProgressChart,BarChart,ContributionGraph} from "react-native-chart-kit";
 import Card from './Components/Card'
 import { Dimensions } from "react-native";
 import Colors from './Constants/Colors'
@@ -14,7 +14,6 @@ export default function App() {
 
   let countryCount = []
 
-  
   //async function to fetch data
   async function fetchData(){
     const res = await fetch('https://pomber.github.io/covid19/timeseries.json')
@@ -24,19 +23,24 @@ export default function App() {
     setRecovered(countryCount.map(item=>item.recovered))
     setDeaths(countryCount.map(item=>item.deaths))
     setDate(countryCount.map(item=>item.date))
-   
-    
-    
-    // console.log("deaths", deaths)
-    // console.log("recovered", recovered)
   }
   useEffect(()=>{
     fetchData()
   },[])
+  
   const data = {
     labels: ["Swim", "Bike", "Run"], // optional
     data: [0.4, 0.6, 0.8]
   };
+  const datas = {
+    labels: ["January", "February", "March", "April", "May", "June"],
+    datasets: [
+      {
+        data: [20, 45, 28, 80, 99, 43]
+      }
+    ]
+  };
+  
   const chartConfig = {
     backgroundGradientFrom: "#1E2923",
     backgroundGradientFromOpacity: 0,
@@ -54,6 +58,19 @@ export default function App() {
   const showStatsForCountry=()=>{
     setModal(!modal)
   }
+  const commitsData = [
+    { date: "2017-01-02", count: 1 },
+    { date: "2017-01-03", count: 2 },
+    { date: "2017-01-04", count: 3 },
+    { date: "2017-01-05", count: 4 },
+    { date: "2017-01-06", count: 5 },
+    { date: "2017-01-30", count: 2 },
+    { date: "2017-01-31", count: 3 },
+    { date: "2017-03-01", count: 2 },
+    { date: "2017-04-02", count: 4 },
+    { date: "2017-03-05", count: 2 },
+    { date: "2017-02-30", count: 4 }
+  ];
   return (
     
     <View style={styles.container}>
@@ -65,46 +82,13 @@ export default function App() {
 
       <View style={styles.chartHolder}>
         {/* This view will hold the graph */}
-        <ScrollView>
+        <ScrollView horizontal>
         <View style={styles.chart}>
           
 
           
   <View style={styles.countstatus}><Text style={styles.subheading}>Death Toll{latest}</Text></View>
-  <LineChart
-    data={{
-      labels: ["January", "February", "March", "April"],
-      datasets: [
-        {
-          data: total
-        }
-      ]
-    }}
-    width={Dimensions.get("window").width*.95} // from react-native
-    height={320}
-    chartConfig={{
-      backgroundColor: "#FFF",
-      backgroundGradientFrom: "#FFF",
-      backgroundGradientTo: "#fff",
-      decimalPlaces: 0,
-      color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-      labelColor: (opacity = 0) => `rgba(0, 0, 0, ${opacity})`,
-      style: {
-        borderRadius: 16
-      },
-      propsForDots: {
-        r: "2",
-        strokeWidth: "2",
-        stroke: "#ffa726"
-      }
-    }}
-   
-    style={{
-      marginVertical: 8,
-      borderRadius: 16,
-      padding:5
-    }}
-  />
+  
 </View>
 <View style={styles.chart}>
 <ProgressChart
@@ -115,6 +99,27 @@ export default function App() {
   radius={32}
   chartConfig={chartConfig}
   hideLegend={false}
+/>
+</View>
+<View style={styles.chart}>
+<BarChart
+
+  data={datas}
+  width={Dimensions.get("window").width*.95} // from react-native
+  height={220}
+  yAxisLabel="$"
+  chartConfig={chartConfig}
+  verticalLabelRotation={30}
+/>
+</View>
+<View style={styles.chart}>
+<ContributionGraph
+  values={commitsData}
+  endDate={new Date("2017-04-01")}
+  numDays={105}
+  width={Dimensions.get("window").width*.95}
+  height={220}
+  chartConfig={chartConfig}
 />
 </View>
 </ScrollView>
