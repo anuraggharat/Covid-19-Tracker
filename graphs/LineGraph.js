@@ -3,7 +3,7 @@ import { View,Dimensions } from 'react-native'
 import {LineChart} from 'react-native-chart-kit'
 
 
-export default function LineGraph() {
+export default function LineGraph(props) {
     return (
         <View>
             <LineChart
@@ -11,7 +11,7 @@ export default function LineGraph() {
       labels: ["January", "February", "March", "April"],
       datasets: [
         {
-          data: ["20","40","50"]
+          data:props.data
         }
       ]
     }}

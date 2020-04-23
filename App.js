@@ -84,9 +84,10 @@ export default function App() {
         <ScrollView horizontal>
 
         <View style={styles.display}>
-          <LineGraph />
-          <View style={styles.countstatus}>
-            <Text style={styles.subheading}>Death Toll{latest}</Text>
+          <LineGraph data={total} />
+          <View style={styles.centerText}>
+            <Text style={styles.primaryText}>Total Infected</Text>
+            
           </View>
 
         </View>
@@ -130,8 +131,8 @@ export default function App() {
       
               <View style={styles.stats}>
                 <View style={styles.bottomcard}>
-                <View style={styles.countryname}>
-                    <Text>Country:India</Text>
+                <View style={styles.centerText}>
+                    <Text style={styles.primaryText}>Country:India</Text>
                 </View>
                   <View style={styles.cardHolder}>
                     <Card 
@@ -150,13 +151,13 @@ export default function App() {
                     name="Recovered"></Card>
                   </View>
                 
-                <View style={styles.countDate}>
-                  <Text>Count as per the date 24 April</Text>
+                <View style={styles.centerText}>
+                <Text style={styles.secondaryText}>{latest}</Text>
                 </View>
                 <View style={styles.buttonHolder}>
                   <Button color="green" onPress={showStatsForCountry} style={styles.btn} title="Change Country" ></Button>
                 </View>
-               
+                
                 </View>
               </View>
       
@@ -173,6 +174,18 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  primaryText:{
+    fontSize:30,
+    color:"black"
+  },
+  secondaryText:{
+    fontSize:20,
+    color:"grey"
+  },
+  tertiaryText:{
+    fontSize:10,
+    color:"black"
+  },  
   container: {
     flex: 1,
     backgroundColor: '#EEEFF3'
@@ -213,14 +226,15 @@ const styles = StyleSheet.create({
   buttonHolder:{
     paddingHorizontal:50,
     justifyContent:"center",
-    paddingTop:20,
+    paddingTop:5,
     borderRadius:50
   },
-  countstatus:{
+  centerText:{
     display:"flex",
     justifyContent:"center",
-    paddingLeft:30,
-    fontSize:30
+    width:"100%",
+    textAlign:"center",
+    alignItems:"center",
   },
   countDate:{
     textAlign:"center",
