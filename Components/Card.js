@@ -13,20 +13,19 @@ const Card = (props) => {
 const styles = StyleSheet.create({
     card:{
         height:150,
-        borderRadius:20,
+        margin:0,
         width:"30%",
         textAlign:"center",
         justifyContent:"center",
         alignItems:"center",
-        backgroundColor:"white"
         },
     count:{
-        fontSize:40,
-        color:"white"
+        fontSize:30,
+
     },
     name:{
         fontSize:20,
-        color:"grey"
+        color:"black"
     }
     
   });

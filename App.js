@@ -1,10 +1,10 @@
 import React,{useState,useEffect} from 'react';
 import { StyleSheet, Text, View, Button, TextInput,Modal, ScrollView } from 'react-native';
-import {LineChart,ProgressChart,BarChart,ContributionGraph} from "react-native-chart-kit";
+import {ProgressChart,BarChart,ContributionGraph} from "react-native-chart-kit";
 import Card from './Components/Card'
 import { Dimensions } from "react-native";
 import Colors from './Constants/Colors'
-
+import LineGraph from './graphs/LineGraph'
 export default function App() {
   const [modal,setModal] = useState(false)
   const [deaths,setDeaths] = useState([])
@@ -76,20 +76,21 @@ export default function App() {
     <View style={styles.container}>
       
       <View style={styles.header}>
-        {/* This view will hold the header section */}
         <Text style={styles.heading}>Covid-19 Tracker</Text>
       </View>
 
-      <View style={styles.chartHolder}>
-        {/* This view will hold the graph */}
+      <View style={styles.displayHolder}>
+      
         <ScrollView horizontal>
-        <View style={styles.chart}>
-          
 
-          
-  <View style={styles.countstatus}><Text style={styles.subheading}>Death Toll{latest}</Text></View>
-  
-</View>
+        <View style={styles.display}>
+          <LineGraph />
+          <View style={styles.countstatus}>
+            <Text style={styles.subheading}>Death Toll{latest}</Text>
+          </View>
+
+        </View>
+
 <View style={styles.chart}>
 <ProgressChart
   data={data}
@@ -123,29 +124,40 @@ export default function App() {
 />
 </View>
 </ScrollView>
-                <Text style={styles.country} >Country: INDIA</Text>
+            
 
           </View>
       
               <View style={styles.stats}>
-                <View style={styles.cardHolder}>
-                  <Card 
-                  style={{color:"#74B9FF"}} 
-                  no={count} 
-                  name="Total"
-                  ></Card>
-                  <Card 
-                  style={{color:"#E71C23"}} 
-                  no={dead}
-                  name="Deaths"
-                  ></Card>
-                  <Card 
-                  style={{color:"#2ecc72"}} 
-                  no={recovery} 
-                  name="Recovered"></Card>
+                <View style={styles.bottomcard}>
+                <View style={styles.countryname}>
+                    <Text>Country:India</Text>
                 </View>
-                <View style={styles.countDate}><Text>Count as per the date 24 April</Text></View>
-                <View style={styles.buttonHolder}><Button color="green" onPress={showStatsForCountry} style={styles.btn} title="Change Country" ></Button></View>
+                  <View style={styles.cardHolder}>
+                    <Card 
+                    style={{color:"#74B9FF"}} 
+                    no={count} 
+                    name="Total"
+                    ></Card>
+                    <Card 
+                    style={{color:"#E71C23"}} 
+                    no={dead}
+                    name="Deaths"
+                    ></Card>
+                    <Card 
+                    style={{color:"#2ecc72"}} 
+                    no={recovery} 
+                    name="Recovered"></Card>
+                  </View>
+                
+                <View style={styles.countDate}>
+                  <Text>Count as per the date 24 April</Text>
+                </View>
+                <View style={styles.buttonHolder}>
+                  <Button color="green" onPress={showStatsForCountry} style={styles.btn} title="Change Country" ></Button>
+                </View>
+               
+                </View>
               </View>
       
                 <Modal animationType="slide" visible={modal}  >
@@ -156,6 +168,7 @@ export default function App() {
                 </Modal>
   
     </View>
+    // endofcontainer
   );
 }
 
@@ -165,24 +178,31 @@ const styles = StyleSheet.create({
     backgroundColor: '#EEEFF3'
   },
   heading:{
-    fontSize:30
-  },
-  chart:{
-    width:"100%",
-
-    justifyContent:"center",
-    textAlign:"center",
-    alignItems:"center",
-    alignContent:"center"
+    fontSize:20
   },
   header:{
     width:'100%',
     height:"10%",
     paddingTop:40,
-    paddingLeft:20,
-    borderBottomColor:"grey",
-    borderBottomWidth:2
-    
+    paddingLeft:20,    
+  },
+  displayHolder:{
+    height:"55%",
+    padding:"0%"
+  },
+  display:{
+    height:"100%",
+    marginHorizontal:20,
+    borderRadius:30,
+    padding:0, 
+    backgroundColor:"white"
+  },
+  chart:{
+    width:"100%",
+    justifyContent:"center",
+    textAlign:"center",
+    alignItems:"center",
+    alignContent:"center"
   },
   subheading:{
     fontSize:30
@@ -221,13 +241,18 @@ const styles = StyleSheet.create({
     elevation:10
     
   },
+  bottomcard:{
+    width:"90%",
+    backgroundColor:"white",
+    height:"90%",
+    margin:"5%",
+    borderRadius:30,
+  },
   stats:{
-    flex:1,
+    height:"35%",
     width:"100%",
-    
   },
   cardHolder:{
-    paddingVertical:20,
     width:"100%",
     flexDirection:"row",
     justifyContent:"space-evenly",

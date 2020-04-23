@@ -1,8 +1,9 @@
 import React from 'react'
 import { View,Dimensions } from 'react-native'
+import {LineChart} from 'react-native-chart-kit'
 
 
-export default function LineChart() {
+export default function LineGraph() {
     return (
         <View>
             <LineChart
@@ -14,8 +15,8 @@ export default function LineChart() {
         }
       ]
     }}
-    width={Dimensions.get("window").width*.95} // from react-native
-    height={320}
+    width={Dimensions.get("window").width*.90} // from react-native
+    height={350}
     chartConfig={{
       backgroundColor: "#FFF",
       backgroundGradientFrom: "#FFF",
@@ -34,9 +35,9 @@ export default function LineChart() {
     }}
    
     style={{
-      marginVertical: 8,
-      borderRadius: 16,
-      padding:5
+      width:"100%",
+      marginTop:20,
+      marginleft:5
     }}
   />
         </View>
