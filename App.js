@@ -13,22 +13,42 @@ export default function App() {
   const [recovered,setRecovered] =useState([])
   const [date,setDate]=useState([])
   const [total,setTotal]= useState([])
-
+  const [info,setInfo]=useState([])
+  const [displayText,setDisplaytext]=useState("Infected People")
   let countryCount = []
+  const d=["190","300","400","20"]
 
   //async function to fetch data
   async function fetchData(){
     const res = await fetch('https://pomber.github.io/covid19/timeseries.json')
     const data =await res.json()
     countryCount = data.India
+    //console.log(countryCount);
+    
     setTotal(countryCount.map(item=>item.confirmed))
     setRecovered(countryCount.map(item=>item.recovered))
     setDeaths(countryCount.map(item=>item.deaths))
     setDate(countryCount.map(item=>item.date))
+    setInfo(total)
   }
   useEffect(()=>{
     fetchData()
   },[])
+
+  const changeInfo=(n)=>{
+    if(n==1){
+      setInfo(total)
+      setDisplaytext("Infected People")
+    }
+    if(n==2){
+      setInfo(deaths)
+      setDisplaytext("Death People")
+    }
+    else{
+      setInfo(recovered)
+      setDisplaytext("Recovered People")
+    }
+  }
  
   
 
@@ -54,9 +74,17 @@ export default function App() {
         <ScrollView horizontal>
 
         <View style={styles.display}>
-          <LineGraph data={total} />
+          <LineGraph data={info} />
           <View style={styles.centerText}>
-            <Text style={styles.primaryText}>Total Infected</Text>  
+            <Text style={styles.primaryText}>{displayText}</Text>
+            <View style={styles.stateButton}>
+              <View style={styles.btn}><Button title="Infected" color="#74B9FF" onPress={()=>changeInfo(1)}></Button></View>
+              <View style={styles.btn}><Button title="Deaths" color="#E71C23" onPress={()=>changeInfo(2)}></Button></View>
+              <View style={styles.btn}><Button title="Recovered"  color="#2ecc72" onPress={()=>changeInfo(3)}></Button></View>
+            
+            
+            
+            </View>
           </View>
         </View>
         
@@ -75,7 +103,7 @@ export default function App() {
         </View>
 
         <View style={styles.display}>
-          <Heatmap />
+          <Heatmap deaths={deaths} total={total} recovered={recovered} date={date} />
           <View style={styles.centerText}>
             <Text style={styles.primaryText}>Total Infected</Text>  
           </View>
@@ -114,7 +142,7 @@ export default function App() {
                 <Text style={styles.secondaryText}>{latest}</Text>
                 </View>
                 <View style={styles.buttonHolder}>
-                  <Button color="green" onPress={showStatsForCountry} style={styles.btn} title="Change Country" ></Button>
+                  <Button color="green" onPress={showStatsForCountry}  title="Change Country" ></Button>
                 </View>
                 
                 </View>
@@ -148,6 +176,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#EEEFF3'
+  },
+  btn:{
+    marginVertical:10
   },
   heading:{
     fontSize:20
@@ -201,6 +232,12 @@ const styles = StyleSheet.create({
     alignItems:"center",
     justifyContent:"center"
   },
+  stateButton:{
+    display:"flex",
+    flexDirection:"row",
+    justifyContent:"space-evenly"
+
+  },
   chartHolder:{
     height:"55%",
     alignItems:"center",
@@ -212,7 +249,6 @@ const styles = StyleSheet.create({
     shadowOffset:{  width: 100,  height: 100,  },
     shadowOpacity:1,
     elevation:10
-    
   },
   bottomcard:{
     width:"90%",
