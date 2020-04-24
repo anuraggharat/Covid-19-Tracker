@@ -14,6 +14,7 @@ export default function App() {
   const [date,setDate]=useState([])
   const [total,setTotal]= useState([])
   const [info,setInfo]=useState([])
+  const [loading,setLoading] = useState(true)
   const [displayText,setDisplaytext]=useState("Infected People")
   let countryCount = []
   const d=["190","300","400","20"]
@@ -22,32 +23,21 @@ export default function App() {
   async function fetchData(){
     const res = await fetch('https://pomber.github.io/covid19/timeseries.json')
     const data =await res.json()
-    countryCount = data.India
-    //console.log(countryCount);
-    
+    countryCount = data.India    
     setTotal(countryCount.map(item=>item.confirmed))
     setRecovered(countryCount.map(item=>item.recovered))
     setDeaths(countryCount.map(item=>item.deaths))
     setDate(countryCount.map(item=>item.date))
-    setInfo(total)
+    setInfo(d)
+    setLoading(false)
   }
   useEffect(()=>{
     fetchData()
   },[])
 
-  const changeInfo=(n)=>{
-    if(n==1){
-      setInfo(total)
-      setDisplaytext("Infected People")
-    }
-    if(n==2){
-      setInfo(deaths)
-      setDisplaytext("Death People")
-    }
-    else{
-      setInfo(recovered)
-      setDisplaytext("Recovered People")
-    }
+  const changeInfo=(n,t)=>{
+    setInfo(n)
+    setDisplaytext(t)
   }
  
   
@@ -56,7 +46,7 @@ export default function App() {
   let count=total.slice(-1)[0]
   let recovery=recovered.slice(-1)[0]
   let latest=date.pop()
-  console.log("total", count)
+  
   const showStatsForCountry=()=>{
     setModal(!modal)
   }
@@ -74,13 +64,13 @@ export default function App() {
         <ScrollView horizontal>
 
         <View style={styles.display}>
-          <LineGraph data={info} />
+         {loading ? <View ><Text>loading</Text></View> :  <LineGraph data={info} />}
           <View style={styles.centerText}>
             <Text style={styles.primaryText}>{displayText}</Text>
             <View style={styles.stateButton}>
-              <View style={styles.btn}><Button title="Infected" color="#74B9FF" onPress={()=>changeInfo(1)}></Button></View>
-              <View style={styles.btn}><Button title="Deaths" color="#E71C23" onPress={()=>changeInfo(2)}></Button></View>
-              <View style={styles.btn}><Button title="Recovered"  color="#2ecc72" onPress={()=>changeInfo(3)}></Button></View>
+              <View style={styles.btn}><Button title="Infected" color="#74B9FF" onPress={()=>changeInfo(total,"Infected People")}></Button></View>
+              <View style={styles.btn}><Button title="Deaths" color="#E71C23" onPress={()=>changeInfo(deaths,"Dead People")}></Button></View>
+              <View style={styles.btn}><Button title="Recovered"  color="#2ecc72" onPress={()=>changeInfo(recovered,"Recovered People")}></Button></View>
             
             
             
