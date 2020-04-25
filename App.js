@@ -23,12 +23,13 @@ export default function App() {
   async function fetchData(){
     const res = await fetch('https://pomber.github.io/covid19/timeseries.json')
     const data =await res.json()
-    countryCount = data.India    
+    countryCount = data.India  
+    setInfo(countryCount.map(item=>item.confirmed))  
     setTotal(countryCount.map(item=>item.confirmed))
     setRecovered(countryCount.map(item=>item.recovered))
     setDeaths(countryCount.map(item=>item.deaths))
     setDate(countryCount.map(item=>item.date))
-    setInfo(d)
+    
     setLoading(false)
   }
   useEffect(()=>{
