@@ -18,10 +18,11 @@ export default function LineGraph(props) {
     width={Dimensions.get("window").width*.90} // from react-native
     height={350}
     withInnerLines={false}
+    withShadow={false}
     chartConfig={{
       backgroundColor: "#FFF",
-      backgroundGradientFrom: "#FFF",
-      backgroundGradientTo: "#f1af22",
+      backgroundGradientFrom: "#c2e9fb",
+      backgroundGradientTo: "#a1c4fd",
       decimalPlaces: 0,
       color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
       labelColor: (opacity = 0) => `rgba(255, 255, 255, ${opacity})`,

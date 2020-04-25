@@ -10,14 +10,14 @@ export default function Piediagram({r,d}) {
   const data = [
     {
       name: "Recovered",
-      population: r,
+      population: 2,
       color: "rgba(131, 167, 234, 1)",
       legendFontColor: "#7F7F7F",
       legendFontSize: 15
     },
     {
       name: "Deaths",
-      population: d,
+      population: 3,
       color: "#F00",
       legendFontColor: "#7F7F7F",
       legendFontSize: 15
@@ -37,7 +37,7 @@ export default function Piediagram({r,d}) {
 
 
     return (
-        <View>
+        <View style={{alignContent:"center",alignItems:"center"}}>
             <PieChart
   data={data}
   width={Dimensions.get("window").width*.90}
@@ -47,8 +47,11 @@ export default function Piediagram({r,d}) {
   accessor="population"
   backgroundColor="transparent"
   absolute
-  padding={50}
-
+  paddingLeft="80"
+  style={{
+    marginTop:20,
+    padding:0
+  }}
 
             />
         </View>

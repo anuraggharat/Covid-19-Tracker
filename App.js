@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Button, TextInput,Modal, ScrollView } from 'rea
 import Card from './Components/Card'
 import LineGraph from './graphs/LineGraph'
 import ProgressRing from './graphs/ProgressRing'
+import Piediagram from './graphs/Piediagram'
 import BarGraph from './graphs/BarGraph';
 import Heatmap from './graphs/Heatmap';
 
@@ -80,16 +81,19 @@ export default function App() {
         </View>
         
         <View style={styles.display}>
-          <ProgressRing />
+          <Piediagram />
           <View style={styles.centerText}>
             <Text style={styles.primaryText}>Total Infected</Text>  
+            <Text style={styles.secondaryText,styles.redText}>Red- Number of Deaths</Text>  
+            <Text style={styles.secondaryText,styles.greenText}>Green- Number of recovered</Text> 
           </View>
         </View>
 
         <View style={styles.display}>
           <BarGraph />
           <View style={styles.centerText}>
-            <Text style={styles.primaryText}>Total Infected</Text>  
+            <Text style={styles.primaryText}>Total Infected</Text>
+   
           </View>
         </View>
 
@@ -163,7 +167,13 @@ const styles = StyleSheet.create({
   tertiaryText:{
     fontSize:10,
     color:"black"
+  },
+  redText:{
+    color:"#E71C23"
   },  
+  greenText:{
+    color:"#2ecc72"
+  },
   container: {
     flex: 1,
     backgroundColor: '#EEEFF3'
