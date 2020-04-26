@@ -5,7 +5,6 @@ import LineGraph from './graphs/LineGraph'
 import Loading from './Components/Loading' 
 import Piediagram from './graphs/Piediagram'
 import BarGraph from './graphs/BarGraph';
-import Heatmap from './graphs/Heatmap';
 
 
 export default function App() {
@@ -17,11 +16,11 @@ export default function App() {
   const [info,setInfo]=useState([])
   const [loading,setLoading] = useState(true)
   const [displayText,setDisplaytext]=useState("Infected People")
-  
+  const [country,setCountry] = useState("India")
   const d=["190","300","400","20"]
-
+  
   //async function to fetch data
-  async function fetchData(){
+  async function fetchData(country){
     const res = await fetch('https://pomber.github.io/covid19/timeseries.json')
     const data =await res.json()
     countryCount = data.India  
@@ -34,7 +33,7 @@ export default function App() {
     setLoading(false)
   }
   useEffect(()=>{
-    fetchData()
+    fetchData(country)
   },[])
 
   const changeInfo=(n,t)=>{
@@ -82,7 +81,7 @@ export default function App() {
         
         <View style={styles.display}>
           
-          {loading ? <View><Text>Hello its loading</Text></View>:<Piediagram d={dead} r={recovery} t={count} />  }
+          {loading ? <Loading />:<Piediagram d={dead} r={recovery} t={count} />  }
           <View style={styles.centerText}>
             <Text style={styles.secondaryText,styles.redText}>Red- Number of Deaths</Text>  
             <Text style={styles.secondaryText,styles.greenText}>Green- Number of recovered</Text> 
@@ -90,7 +89,7 @@ export default function App() {
         </View>
 
         <View style={styles.display}>
-        {loading ? <View><Text>Hello its loading</Text></View>:<BarGraph data={countryCount} />  }
+        {loading ? <Loading />:<BarGraph data={countryCount} />  }
           
           <View style={styles.centerText}>
             <Text style={styles.primaryText}>Rise in Covid-19 </Text>
@@ -98,12 +97,6 @@ export default function App() {
           </View>
         </View>
 
-        <View style={styles.display}>
-          <Heatmap deaths={deaths} total={total} recovered={recovered} date={date} />
-          <View style={styles.centerText}>
-            <Text style={styles.primaryText}>Total Infected</Text>  
-          </View>
-        </View>
 
 
 
@@ -138,7 +131,6 @@ export default function App() {
                 <Text style={styles.secondaryText}>{latest}</Text>
                 </View>
                 <View style={styles.buttonHolder}>
-                  <Button color="green" onPress={showStatsForCountry}  title="Change Country" ></Button>
                 </View>
                 
                 </View>
