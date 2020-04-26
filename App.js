@@ -2,7 +2,7 @@ import React,{useState,useEffect} from 'react';
 import { StyleSheet, Text, View, Button, TextInput,Modal, ScrollView } from 'react-native';
 import Card from './Components/Card'
 import LineGraph from './graphs/LineGraph'
-
+import Loading from './Components/Loading' 
 import Piediagram from './graphs/Piediagram'
 import BarGraph from './graphs/BarGraph';
 import Heatmap from './graphs/Heatmap';
@@ -66,7 +66,7 @@ export default function App() {
         <ScrollView horizontal>
 
         <View style={styles.display}>
-         {loading ? <View ><Text>loading</Text></View> :  <LineGraph data={info} />}
+         {loading ? <Loading /> :  <LineGraph data={info} />}
           <View style={styles.centerText}>
             <Text style={styles.primaryText}>{displayText}</Text>
             <View style={styles.stateButton}>

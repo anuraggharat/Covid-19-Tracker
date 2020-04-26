@@ -5,22 +5,26 @@ import { Dimensions } from "react-native";
 
 export default function BarGraph({data}) {
  
+
+
+      const jan= data.filter(item=>item.date=="2020-1-31")
+      const janCount= jan.confirmed
+      const feb= data.filter(item=>item.date=="2020-2-29")
+      const febCount= feb.confirmed
+      const march= data.filter(item=>item.date=="2020-3-31")
+      const marchCount= march.confirmed
+      const april= data.slice(-1)[0]
+      const aprilCount= april.confirmed
+      console.log(jan,feb,march,april)
+
       const datas = {
-        labels: ["January", "February", "March", "April", "May", "June"],
+        labels: ["January", "February", "March", "April"],
         datasets: [
           {
-            data: [20, 45, 28, 80, 99, 43]
+            data: [janCount,febCount, marchCount,aprilCount]
           }
         ]
       };
-
-      const jan= data.filter(item=>item.date=="2020-1-31")
-      const feb= data.filter(item=>item.date=="2020-2-29")
-      const march= data.filter(item=>item.date=="2020-3-31")
-      const april= data.slice(-1)[0]
-      console.log(jan,feb,march,april)
-
-
 
       // console.log(datai);
       
