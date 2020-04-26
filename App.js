@@ -90,7 +90,7 @@ export default function App() {
         </View>
 
         <View style={styles.display}>
-        {loading ? <View><Text>Hello its loading</Text></View>:<BarGraph datai={countryCount} />  }
+        {loading ? <View><Text>Hello its loading</Text></View>:<BarGraph data={countryCount} />  }
           
           <View style={styles.centerText}>
             <Text style={styles.primaryText}>Total Infected</Text>

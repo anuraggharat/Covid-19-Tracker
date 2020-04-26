@@ -3,12 +3,8 @@ import { View } from 'react-native'
 import {BarChart} from "react-native-chart-kit";
 import { Dimensions } from "react-native";
 
-export default function BarGraph({datai}) {
-    
-    const data = {
-        labels: ["Swim", "Bike", "Run"], // optional
-        data: [0.4, 0.6, 0.8]
-      };
+export default function BarGraph({data}) {
+ 
       const datas = {
         labels: ["January", "February", "March", "April", "May", "June"],
         datasets: [
@@ -17,7 +13,16 @@ export default function BarGraph({datai}) {
           }
         ]
       };
-      console.log(datai);
+
+      const jan= data.filter(item=>item.date=="2020-1-31")
+      const feb= data.filter(item=>item.date=="2020-2-29")
+      const march= data.filter(item=>item.date=="2020-3-31")
+      const april= data.slice(-1)[0]
+      console.log(jan,feb,march,april)
+
+
+
+      // console.log(datai);
       
       
       const chartConfig = {
