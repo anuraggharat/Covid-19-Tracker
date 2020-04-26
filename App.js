@@ -93,7 +93,7 @@ export default function App() {
         {loading ? <View><Text>Hello its loading</Text></View>:<BarGraph data={countryCount} />  }
           
           <View style={styles.centerText}>
-            <Text style={styles.primaryText}>Total Infected</Text>
+            <Text style={styles.primaryText}>Rise in Covid-19 </Text>
    
           </View>
         </View>

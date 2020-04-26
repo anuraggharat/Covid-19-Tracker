@@ -20,12 +20,12 @@ export default function LineGraph(props) {
     withInnerLines={false}
     withShadow={false}
     chartConfig={{
-      backgroundColor: "#FFF",
-      backgroundGradientFrom: "#accbee",
-      backgroundGradientTo: "#4481eb",
+      backgroundColor: "#ffffff",
+      backgroundGradientFrom: "#fff",
+      backgroundGradientTo: "#DAE0E2",
       decimalPlaces: 0,
-      color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-      labelColor: (opacity = 0) => `rgba(255, 255, 255, ${opacity})`,
+      color: (opacity = 1) => `#FAD02E`,
+      labelColor: (opacity = 0) => `#2B2B52`,
       style: {
         borderRadius: 16
       },
