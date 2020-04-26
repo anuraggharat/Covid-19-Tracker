@@ -55,7 +55,7 @@ export default function Piediagram({r,d,t}) {
   }}
 
             />
-  <Text style={styles.secondaryText}>Current Death Rate is{deathrate.toFixed(2)}</Text>  
+  <Text style={styles.secondaryText}>Current Death Rate is: <Text style={styles.primaryText}>{deathrate.toFixed(2)}</Text></Text>  
 
         </View>
     )
@@ -63,6 +63,7 @@ export default function Piediagram({r,d,t}) {
 const styles = StyleSheet.create({
   primaryText:{
     fontSize:30,
-    color:"grey"
+    color:"grey",
+    textDecorationLine:"underline"
   },
 })

@@ -3,7 +3,7 @@ import { View } from 'react-native'
 import {BarChart} from "react-native-chart-kit";
 import { Dimensions } from "react-native";
 
-export default function BarGraph() {
+export default function BarGraph({datai}) {
     
     const data = {
         labels: ["Swim", "Bike", "Run"], // optional
@@ -17,6 +17,8 @@ export default function BarGraph() {
           }
         ]
       };
+      console.log(datai);
+      
       
       const chartConfig = {
         backgroundGradientFrom: "#1E2923",

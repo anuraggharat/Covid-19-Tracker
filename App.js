@@ -17,7 +17,7 @@ export default function App() {
   const [info,setInfo]=useState([])
   const [loading,setLoading] = useState(true)
   const [displayText,setDisplaytext]=useState("Infected People")
-  let countryCount = []
+  
   const d=["190","300","400","20"]
 
   //async function to fetch data
@@ -90,7 +90,8 @@ export default function App() {
         </View>
 
         <View style={styles.display}>
-          <BarGraph />
+        {loading ? <View><Text>Hello its loading</Text></View>:<BarGraph datai={countryCount} />  }
+          
           <View style={styles.centerText}>
             <Text style={styles.primaryText}>Total Infected</Text>
    
