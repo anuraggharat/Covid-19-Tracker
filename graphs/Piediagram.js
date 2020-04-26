@@ -1,24 +1,24 @@
-import React from 'react'
-import { View } from 'react-native'
+import React, { useEffect } from 'react'
+import { View ,StyleSheet,Text} from 'react-native'
 import {PieChart} from "react-native-chart-kit";
 import { Dimensions } from "react-native";
 
-export default function Piediagram({r,d}) {
+export default function Piediagram({r,d,t}) {
 
-
-    
+  const deathrate=parseInt(d)*100/parseInt(t)
+  
   const data = [
     {
       name: "Recovered",
-      population: 2,
-      color: "rgba(131, 167, 234, 1)",
-      legendFontColor: "#7F7F7F",
+      population: r,
+      color: "#2ecc72",
+      legendFontColor: "#2ecc72",
       legendFontSize: 15
     },
     {
       name: "Deaths",
-      population: 3,
-      color: "#F00",
+      population: d,
+      color: "#E71C23",
       legendFontColor: "#7F7F7F",
       legendFontSize: 15
     },
@@ -35,7 +35,8 @@ export default function Piediagram({r,d}) {
     barPercentage: 0.5
   };
 
-
+  console.log(d,r,t);
+  
     return (
         <View style={{alignContent:"center",alignItems:"center"}}>
             <PieChart
@@ -54,6 +55,14 @@ export default function Piediagram({r,d}) {
   }}
 
             />
+  <Text style={styles.secondaryText}>Current Death Rate is{deathrate.toFixed(2)}</Text>  
+
         </View>
     )
 }
+const styles = StyleSheet.create({
+  primaryText:{
+    fontSize:30,
+    color:"grey"
+  },
+})

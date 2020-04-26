@@ -2,7 +2,7 @@ import React,{useState,useEffect} from 'react';
 import { StyleSheet, Text, View, Button, TextInput,Modal, ScrollView } from 'react-native';
 import Card from './Components/Card'
 import LineGraph from './graphs/LineGraph'
-import ProgressRing from './graphs/ProgressRing'
+
 import Piediagram from './graphs/Piediagram'
 import BarGraph from './graphs/BarGraph';
 import Heatmap from './graphs/Heatmap';
@@ -81,9 +81,9 @@ export default function App() {
         </View>
         
         <View style={styles.display}>
-          <Piediagram />
+          
+          {loading ? <View><Text>Hello its loading</Text></View>:<Piediagram d={dead} r={recovery} t={count} />  }
           <View style={styles.centerText}>
-            <Text style={styles.primaryText}>Total Infected</Text>  
             <Text style={styles.secondaryText,styles.redText}>Red- Number of Deaths</Text>  
             <Text style={styles.secondaryText,styles.greenText}>Green- Number of recovered</Text> 
           </View>

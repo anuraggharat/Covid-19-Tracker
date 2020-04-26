@@ -15,14 +15,14 @@ export default function LineGraph(props) {
         }
       ]
     }}
-    width={Dimensions.get("window").width*.90} // from react-native
-    height={350}
+    width={Dimensions.get("window").width*.85} // from react-native
+    height={Dimensions.get("window").height*0.40}
     withInnerLines={false}
     withShadow={false}
     chartConfig={{
       backgroundColor: "#FFF",
-      backgroundGradientFrom: "#c2e9fb",
-      backgroundGradientTo: "#a1c4fd",
+      backgroundGradientFrom: "#accbee",
+      backgroundGradientTo: "#4481eb",
       decimalPlaces: 0,
       color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
       labelColor: (opacity = 0) => `rgba(255, 255, 255, ${opacity})`,
@@ -32,14 +32,15 @@ export default function LineGraph(props) {
       propsForDots: {
         r: "2",
         strokeWidth: "2",
-        stroke: "#ffa726"
+        stroke: "#fee140"
       }
     }}
    
     style={{
       width:"100%",
       marginTop:20,
-      marginleft:5
+      marginleft:5,
+      paddingHorizontal:10
     }}
   />
         </View>
